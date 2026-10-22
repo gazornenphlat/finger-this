@@ -1,0 +1,28 @@
+FINGER THIS — Scales, Tuner & Metronome
+
+ANDROID (FingerThis.apk)
+  1. Copy FingerThis.apk to your phone, or download it there
+     (email it to yourself, Google Drive, USB cable…).
+  2. Tap the file. Android asks to allow installs from that app
+     (Files, Chrome, Gmail…): tap Settings, turn on "Allow from this source",
+     go back and tap Install.
+  3. Google Play Protect may say it doesn't recognize the developer.
+     Tap "More details" > "Install anyway". (It's unrecognized because it
+     isn't from the Play Store.)
+  4. Open Finger This. It runs full-screen in landscape and works offline.
+     The first time you use the Tuner or Rec, tap Allow for the microphone.
+  Recordings you save go to Downloads/Finger This.
+  To update later, install the new APK over the old one; your settings
+  and practice log are kept.
+
+WINDOWS
+  Quick try: unzip, then double-click index.html (opens in Edge or Chrome).
+
+  Install as an app (own window, Start-menu entry, works offline):
+    1. Go to https://app.netlify.com/drop (free account).
+    2. Drag the whole "finger-this" folder onto the page.
+    3. Open the address Netlify gives you in Edge, then
+       ⋯ menu > Apps > "Install this site as an app".
+
+KEYBOARD (Windows)
+  Space = start/stop    Up/Down = tempo ±1    Shift+Up/Down = ±5

@@ -1,0 +1,38 @@
+# Build output (recreate with: python3 build.py && python3 build_apk.py)
+dist/
+build-apk/
+*.apk
+*.aab
+*.idsig
+
+# Signing key — never commit it. Keep the copy you were given somewhere safe;
+# updates must be signed with the same key to install over the existing app.
+signing/
+*.jks
+*.keystore
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node (if tooling is added later)
+node_modules/
+
+# Test and debug output
+*.log
+test-results/
+screenshots/
+
+# Editors and OS files
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archives
+*.zip
