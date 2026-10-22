@@ -18,6 +18,32 @@ Read `memory.md` for the owner's requirements and the decisions behind them, and
 - **About** — the owner's scale descriptions.
 - **Extras** — tunings, note tones, count-in, speed-up trainer, label modes, left-handed fretboard, tap tempo, subdivisions, A4 reference, keyboard shortcuts, root drone, looping between two positions, 3-notes-per-string layout, triad/7th-chord arpeggios with chord tones circled, record & play back, practice log (fastest clean tempo per key, practice time, streak).
 
+## Screenshots
+
+**Scales** (desktop, 900×420) — fretboard with interlocking positions, finger numbers on every note:
+
+![Scales view](images/scales.png)
+
+**Scales** (phone landscape, 740×350):
+
+![Scales view, phone landscape](images/scales-phone.png)
+
+**Tuner** — floating needle dial, red when out of tune, green when in tune:
+
+![Tuner](images/tuner.png)
+
+**Metronome**:
+
+![Metronome](images/metronome.png)
+
+**Progress** — practice log and recordings:
+
+![Progress](images/progress.png)
+
+**About** — the owner's scale descriptions:
+
+![About](images/about.png)
+
 ## Layout
 
 | Path | What it is |
