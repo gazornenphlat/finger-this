@@ -23,6 +23,7 @@ node_modules/
 # Test and debug output
 *.log
 test-results/
+# Screenshots produced by tools/shoot.py (gitignored); committed images live in images/
 screenshots/
 
 # Editors and OS files

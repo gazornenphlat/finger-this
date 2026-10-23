@@ -13,18 +13,20 @@ async def main():
           for(const ins of Object.keys(f.INSTR))for(let ti=0;ti<f.INSTR[ins].tun.length;ti++)for(const sc of f.SCALES)for(const [kn,k] of f.KEYS){
             Object.assign(f.S,{instr:ins,key:k,scale:sc.id,notes:'scale',layout:'pos',route:'full',begin:'root'});f.S.tun[ins]=ti;
             const t0=performance.now();let M;try{M=f.buildModel();}catch(e){out.push({ins,ti,sc:sc.id,kn,err:String(e)});continue;}const dt=performance.now()-t0;
-            const P=M.positions;let inter=true,step=true,fing=true;
+            const P=M.positions;let inter=true,step=true,fing=true,fretok=true,posnonempty=true;
             for(let i=0;i+1<P.length;i++)for(let k=0;k<M.n;k++)if(P[i].T[k]!==P[i+1].B[k])inter=false;
             const sm=[];for(let m=0;m<200;m++)if(M.pcs.has(m%12))sm.push(m);
-            for(const p of P){for(let j=1;j<p.notes.length;j++){const a=sm.indexOf(p.notes[j-1].m),b=sm.indexOf(p.notes[j].m);if(b!==a+1)step=false;}
-              for(const x of p.notes)if(!(x.finger>=0&&x.finger<=4))fing=false;}
-            out.push({ins,ti,sc:sc.id,kn,n:P.length,inter,step,fing,sp:Math.max(...P.map(p=>p.whi-p.wlo)),hi:Math.max(...P.map(p=>p.whi)),lo:P[0]?P[0].wlo:-1,dt});}
+            for(const p of P){if(!p.notes.length)posnonempty=false;
+              for(let j=1;j<p.notes.length;j++){const a=sm.indexOf(p.notes[j-1].m),b=sm.indexOf(p.notes[j].m);if(b!==a+1)step=false;}
+              for(const x of p.notes){if(!(x.finger>=0&&x.finger<=4))fing=false;if(x.f<0||x.f>M.maxF)fretok=false;}}
+            let seqdup=false;for(let i=1;i<M.seq.length;i++){const a=M.seq[i-1].n,b=M.seq[i].n;if(a.s===b.s&&a.f===b.f){seqdup=true;break;}}
+            out.push({ins,ti,sc:sc.id,kn,n:P.length,inter,step,fing,fretok,posnonempty,seqdup,seq:M.seq.length,chord:M.chordName,sp:Math.max(...P.map(p=>p.whi-p.wlo)),hi:Math.max(...P.map(p=>p.whi)),lo:P[0]?P[0].wlo:-1,dt});}
           return out;}''')
-        errs2=[r for r in res if 'err' in r];print('ERRS',len(errs2),errs2[:6]);res=[r for r in res if 'err' not in r];bad=[r for r in res if not(r['inter'] and r['step'] and r['fing'])]
+        errs2=[r for r in res if 'err' in r];print('ERRS',len(errs2),errs2[:6]);res=[r for r in res if 'err' not in r];bad=[r for r in res if not(r['inter'] and r['step'] and r['fing'] and r['fretok'] and r['posnonempty'] and not r['seqdup'])]
         print('combos',len(res),'bad',len(bad), bad[:5])
         c=collections.Counter((r['ins'],r['ti'],r['n']) for r in res); print(sorted(c.items()))
         sp=collections.Counter((r['ins'],r['ti'],r['sp']) for r in res); print(sorted(sp.items()))
         print('max ms', max(r['dt'] for r in res))
-        short=[(r['ins'],r['ti'],r['sc'],r['kn'],r['n']) for r in res if r['n']<7]; print('short sample',short[:30])
+        short=[(r['ins'],r['ti'],r['sc'],r['kn'],r['n']) for r in res if r['n']<7]; print('short combos:',len(short))
         print('errors',errs); await b.close()
 asyncio.run(main())

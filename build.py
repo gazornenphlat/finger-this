@@ -1,4 +1,4 @@
-import json, os, shutil, zipfile
+import hashlib, json, os, shutil, zipfile
 from PIL import Image, ImageDraw
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -49,7 +49,8 @@ manifest = {
 }
 json.dump(manifest, open(os.path.join(DIST, "manifest.webmanifest"), "w", encoding="utf-8"), indent=2, ensure_ascii=False)
 
-sw = """const C='finger-this-v1';
+sw_ver = hashlib.sha256(body.encode('utf-8')).hexdigest()[:8]
+sw = """const C='finger-this-""" + sw_ver + """';
 const SHELL=['./','./index.html','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/maskable-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(SHELL)));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});

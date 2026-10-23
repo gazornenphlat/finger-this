@@ -9,8 +9,8 @@ JAR = "/usr/lib/android-sdk/platforms/android-23/android.jar"
 KS = os.path.join(ROOT, "signing", "finger-this.jks")
 PW = "fingerthis"
 
-def run(*cmd):
-    r = subprocess.run(cmd, capture_output=True, text=True)
+def run(*cmd, cwd=None):
+    r = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd)
     if r.returncode:
         raise SystemExit(f"FAILED: {' '.join(cmd)}\n{r.stdout}\n{r.stderr}")
     return r.stdout
@@ -41,16 +41,14 @@ run("dalvik-exchange", "--dex", "--min-sdk-version=24", f"--output={os.path.join
 unsigned = os.path.join(OUT, "unsigned.apk")
 run("aapt", "package", "-f", "-M", os.path.join(AND, "AndroidManifest.xml"), "-S", os.path.join(OUT, "res"),
     "-A", os.path.join(OUT, "assets"), "-I", JAR, "-F", unsigned)
-cwd = os.getcwd(); os.chdir(OUT)
-run("aapt", "add", "unsigned.apk", "classes.dex")
-os.chdir(cwd)
+run("aapt", "add", "unsigned.apk", "classes.dex", cwd=OUT)
 aligned = os.path.join(OUT, "aligned.apk")
 run("zipalign", "-f", "-p", "4", unsigned, aligned)
 
 if not os.path.exists(KS):
-    os.makedirs(os.path.dirname(KS), exist_ok=True)
-    run("keytool", "-genkeypair", "-keystore", KS, "-storepass", PW, "-keypass", PW, "-alias", "fingerthis",
-        "-keyalg", "RSA", "-keysize", "2048", "-validity", "10000", "-dname", "CN=Finger This, O=Finger This, C=US")
+    raise SystemExit(f"Signing key not found: {KS}\n"
+                     "Updates must be signed with the owner's key (finger-this.jks). "
+                     "Attach the key you were given; do not generate a new one.")
 apk = os.path.join(ROOT, "dist", "FingerThis.apk")
 run("apksigner", "sign", "--ks", KS, "--ks-pass", f"pass:{PW}", "--key-pass", f"pass:{PW}",
     "--ks-key-alias", "fingerthis", "--out", apk, aligned)

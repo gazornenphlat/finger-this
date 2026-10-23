@@ -67,7 +67,7 @@ The owner's requirements, the decisions made and why, and what's still open. New
 - Drop D, DADGAD and banjo Double C often fit only 4–6 positions.
 - Without internet, the custom fonts fall back to system fonts.
 - In the claude.ai preview, the microphone is unavailable, so the tuner and recording don't work there, and "Save as file" does nothing.
-- **This cloud workspace is temporary.** The source lives in it, and the owner has the built files plus the signing key. To continue in a new session, the source must be re-attached or rebuilt; the signing key must be attached so updates install over the existing app.
+- **Source of truth is now GitHub:** https://github.com/gazornenphlat/finger-this (public). Clone it to continue in a new session; the signing key `finger-this.jks` is *not* in the repo and must be attached separately so updates install over the existing app.
 
 ## Ideas not yet built
 - Exporting the practice log.

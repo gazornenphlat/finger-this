@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
         web = new WebView(this);
         web.setBackgroundColor(Color.rgb(21, 17, 14));
         setContentView(web);
+        immersive();
 
         WebSettings s = web.getSettings();
         s.setJavaScriptEnabled(true);
