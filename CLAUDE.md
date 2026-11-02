@@ -65,8 +65,9 @@ The pipeline is javac → dalvik-exchange (dx) → aapt package → zipalign →
 6. **Tuner.** YIN-style pitch detection and a spring-damped needle. It turns green within ±5 cents, red otherwise; the A4 reference is adjustable.
 7. **Recording** (`R`). MediaRecorder; takes are stored in IndexedDB.
 8. **Practice log.** Best clean tempo per instrument + scale + Play mode + key, plus practice time and day streak.
-9. **About.** The `ABOUT` text is the owner's own wording; keep it, converting notation to ♭ ♯.
-10. **Android hooks**
+9. **Tunings tab.** `TUNINGS` is the owner's CSV as given (114 rows of [name, tuning, description, songs]). `TMERGED` merges rows with identical notes at runtime (91 tunings). Song edits are saved to localStorage `fretwise.tunings.v2`, keyed by the tuning notes; older v1 edits (keyed by row number) migrate on first load, so keep the `TUNINGS` row order.
+10. **About.** The `ABOUT` text is the owner's own wording; keep it, converting notation to ♭ ♯.
+11. **Android hooks**
     - `window.__appPause()` stops audio, tuner and recording.
     - `window.__appBack()` closes About or the options menu first and returns `'handled'`.
     - `window.FingerThisAndroid.saveFile(name, mime, b64)` is the native bridge for saving recordings.

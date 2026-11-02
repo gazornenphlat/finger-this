@@ -2,6 +2,9 @@
 
 The owner's requirements, the decisions made and why, and what's still open. Newest changes are at the bottom of the timeline.
 
+## Repository
+- **Source of truth is GitHub:** https://github.com/gazornenphlat/finger-this (public). Clone it to continue in a new session. The signing key `signing/finger-this.jks` is *not* in the repo and must be attached separately so updates install over the existing app.
+
 ## Owner
 - Learning scales on **guitar, banjo and ukulele**. Wants apps for **Windows and Android**, and **Android in landscape**.
 - Communicates with short, direct specs, sometimes as an attached text file. Prefers that features simply get built.
@@ -45,7 +48,11 @@ The owner's requirements, the decisions made and why, and what's still open. New
   - practice log with fastest clean tempo per key, practice time and streak
 - **2026-10-08 — v3.** 7 interlocking positions, the full categorized scale list, the About screen, and the formula shown beside the Scale menu.
 - **2026-10-08 — v4.** Renamed to Finger This. Built `FingerThis.apk` (versionCode 1, versionName 1.0) and gave the owner the signing key `finger-this.jks`.
-- **2026-10-22.** Created this file and CLAUDE.md.
+- **2026-10-22.** Created this file and CLAUDE.md, plus a .gitignore and a source zip.
+- **2026-10-28 — v5 (APK 1.1, versionCode 2).** New **Tunings** tab built from the owner's CSV (114 tunings). The table sorts by Tuning Name and Tuning, has a search box, and Notable Songs are editable. Edits save on the device (localStorage `fretwise.tunings.v1`). "None" in the CSV shows as an empty "Add a song" field, and note names display with ♭ and ♯.
+
+- **2026-10-28 — v6 (APK 1.2, versionCode 3).** Duplicate tunings consolidated: rows with identical notes are merged at runtime (114 rows → 91 tunings), combining names, descriptions and songs without repeats. Song edits are now keyed by the tuning notes (localStorage `fretwise.tunings.v2`); v1 edits migrate automatically.
+- **2026-10-28 — v7 (APK 1.3, versionCode 4).** Fixed "D Standard / Whole Step Down" to D G C F A D, so it merges with D Standard and Full Step Down. Added 15 common tunings missing from the sheet (Standard, Half Step Down, C♯ Standard, Drop C♯, Baritone, 7- and 8-String Standard, Open B, Open F (low), Open D6, NST, Friends, Rain Song, Iris, Nashville). Total: 104 tunings.
 
 ## Decisions and why
 - **24-fret guitar by default.** For 7-note scales, 7 interlocking positions span about two octaves, which can't fit on 22 frets. 24 frets fits every key and scale in standard tuning. The owner can set their real fret count under ⚙ More; the app then says how many positions fit.
@@ -62,12 +69,13 @@ The owner's requirements, the decisions made and why, and what's still open. New
 - **Internal storage names keep "fretwise"** so saved data survives the rename.
 
 ## Known limitations
+- Tunings merge by note names only, so Baritone merges with Guitarr requinto (same notes, opposite octaves) and Nashville merges with Standard.
 - The APK hasn't been run on a real phone or emulator; it was only built, signature-verified and its page tested in Chromium.
 - Google Play Protect warns on install because the app isn't from the Play Store.
 - Drop D, DADGAD and banjo Double C often fit only 4–6 positions.
 - Without internet, the custom fonts fall back to system fonts.
 - In the claude.ai preview, the microphone is unavailable, so the tuner and recording don't work there, and "Save as file" does nothing.
-- **Source of truth is now GitHub:** https://github.com/gazornenphlat/finger-this (public). Clone it to continue in a new session; the signing key `finger-this.jks` is *not* in the repo and must be attached separately so updates install over the existing app.
+- **This cloud workspace is temporary.** The source lives in it, and the owner has the built files plus the signing key. To continue in a new session, the source must be re-attached or rebuilt; the signing key must be attached so updates install over the existing app.
 
 ## Ideas not yet built
 - Exporting the practice log.
