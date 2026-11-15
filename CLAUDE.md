@@ -16,7 +16,7 @@ Read `memory.md` for the owner's requirements and the decisions behind them befo
 | `build.py` | Builds `dist/finger-this/` (PWA: index.html, manifest, sw.js, icons), `dist/preview.html` (artifact copy) and `dist/FingerThis-app.zip`. |
 | `build_apk.py` | Builds `dist/FingerThis.apk` from `dist/finger-this/index.html` (run `build.py` first). |
 | `android/` | `AndroidManifest.xml`, `res/values/strings.xml` and `src/app/fingerthis/MainActivity.java` (the WebView wrapper). |
-| `signing/finger-this.jks` | APK signing key. Alias `fingerthis`, store and key password `fingerthis`. |
+| `signing/finger-this.jks` | APK signing key. Alias `fingerthis`; the store/key password comes from `FINGERTHIS_KS_PASS` or `signing/password.txt` (gitignored). |
 | `tests/verify_positions.py` | Checks all 3,960 instrument × tuning × scale × key combinations. |
 
 ## Build
@@ -65,7 +65,7 @@ The pipeline is javac → dalvik-exchange (dx) → aapt package → zipalign →
 6. **Tuner.** YIN-style pitch detection and a spring-damped needle. It turns green within ±5 cents, red otherwise; the A4 reference is adjustable.
 7. **Recording** (`R`). MediaRecorder; takes are stored in IndexedDB.
 8. **Practice log.** Best clean tempo per instrument + scale + Play mode + key, plus practice time and day streak.
-9. **Tunings tab.** `TUNINGS` is the owner's CSV as given (114 rows of [name, tuning, description, songs]). `TMERGED` merges rows with identical notes at runtime (91 tunings). Song edits are saved to localStorage `fretwise.tunings.v2`, keyed by the tuning notes; older v1 edits (keyed by row number) migrate on first load, so keep the `TUNINGS` row order.
+9. **Tunings tab.** `TUNINGS` is the owner's CSV as given (129 rows of [name, tuning, description, songs]). `TMERGED` merges rows with identical notes at runtime (104 tunings). Song edits are saved to localStorage `fretwise.tunings.v2`, keyed by the tuning notes; older v1 edits (keyed by row number) migrate on first load, so keep the `TUNINGS` row order.
 10. **About.** The `ABOUT` text is the owner's own wording; keep it, converting notation to ♭ ♯.
 11. **Android hooks**
     - `window.__appPause()` stops audio, tuner and recording.

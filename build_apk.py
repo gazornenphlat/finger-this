@@ -7,7 +7,14 @@ AND = os.path.join(ROOT, "android")
 OUT = os.path.join(ROOT, "build-apk")
 JAR = "/usr/lib/android-sdk/platforms/android-23/android.jar"
 KS = os.path.join(ROOT, "signing", "finger-this.jks")
-PW = "fingerthis"
+# Signing password: never hardcode it. Set FINGERTHIS_KS_PASS, or put the
+# password on one line in signing/password.txt (gitignored, like the .jks).
+PW = os.environ.get("FINGERTHIS_KS_PASS", "").strip()
+if not PW:
+    _pw_file = os.path.join(ROOT, "signing", "password.txt")
+    if os.path.exists(_pw_file):
+        with open(_pw_file, encoding="utf-8") as _f:
+            PW = _f.read().strip()
 
 def run(*cmd, cwd=None):
     r = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd)
@@ -49,6 +56,10 @@ if not os.path.exists(KS):
     raise SystemExit(f"Signing key not found: {KS}\n"
                      "Updates must be signed with the owner's key (finger-this.jks). "
                      "Attach the key you were given; do not generate a new one.")
+if not PW:
+    raise SystemExit("No signing password: set FINGERTHIS_KS_PASS, or create "
+                     "signing/password.txt (one line, in the gitignored signing/ "
+                     "folder next to finger-this.jks).")
 apk = os.path.join(ROOT, "dist", "FingerThis.apk")
 run("apksigner", "sign", "--ks", KS, "--ks-pass", f"pass:{PW}", "--key-pass", f"pass:{PW}",
     "--ks-key-alias", "fingerthis", "--out", apk, aligned)

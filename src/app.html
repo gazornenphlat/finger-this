@@ -402,6 +402,8 @@ th[aria-sort="none"] .sortbtn i::after{content:"⇅"}
 const SHARP=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
 const mod=(a,n)=>((a%n)+n)%n;
 const FLAT =['C','D♭','D','E♭','E','F','G♭','G','A♭','A','B♭','B'];
+// scale-degree names by semitone (0–11), for chord names the suffix tables don't cover
+const DEG=['1','♭2','2','♭3','3','4','♭5','5','♭6','6','♭7','7'];
 // most-played keys on fretted folk/rock instruments first
 const KEYS=[['G',7],['C',0],['D',2],['A',9],['E',4],['F',5],['B♭',10],['E♭',3],['B',11],['A♭',8],['F♯',6],['D♭',1]];
 // scales grouped as in the About page; formulas are the single source of truth
@@ -726,7 +728,7 @@ function setBpm(v,fromInput){
 }
 
 /* ---------- tuner ---------- */
-const T={on:false,stream:null,an:null,buf:null,hist:[],cents:0,shown:0,vel:0,raf:0,last:0};
+const T={on:false,stream:null,an:null,buf:null,hist:[],cents:0,shown:0,vel:0,raf:0,silent:0,last:0};
 function buildDial(){
   const cx=210,cy=250,r=196;let h='';
   const ang=c=>c/50*68*Math.PI/180;
