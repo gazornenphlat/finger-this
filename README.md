@@ -53,12 +53,13 @@ Read `memory.md` for the owner's requirements and the decisions behind them, and
 | `build.py` | Builds `dist/finger-this/` (PWA: index.html, manifest, sw.js, icons), `dist/preview.html` and `dist/FingerThis-app.zip`. |
 | `build_apk.py` | Builds `dist/FingerThis.apk` from `dist/finger-this/index.html` (run `build.py` first). |
 | `android/` | `AndroidManifest.xml`, `res/values/strings.xml` and `src/app/fingerthis/MainActivity.java` (the WebView wrapper). |
-| `signing/finger-this.jks` | APK signing key (not in repo). Alias `fingerthis`, store and key password `fingerthis`. |
+| `signing/finger-this.jks` | APK signing key (not in repo). Alias `fingerthis`; the store/key password comes from `FINGERTHIS_KS_PASS` or `signing/password.txt` (gitignored). |
 | `tests/verify_positions.py` | Checks all 3,960 instrument × tuning × scale × key combinations. |
 
 ## Build
 
 ```bash
+pip install -r requirements.txt  # Pillow for icons, Playwright for the position test and screenshots
 python3 build.py                 # PWA folder, preview.html, zip
 python3 build_apk.py             # signed APK
 python3 tests/verify_positions.py   # must print "bad 0" and "ERRS 0"
